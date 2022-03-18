@@ -26,8 +26,7 @@ namespace ConsoleApp3
 
     static void WriteToFile(Type type)
     {
-      using(var stream = new FileStream(FileName, FileMode.Create))
-      using (var file = new StreamWriter(stream))
+      using (var file = new StreamWriter(FileName, false))
       {
         var methodNames = new StringBuilder();
         foreach(var method in type.GetMethods(BindingFlags.Public | BindingFlags.Instance))
