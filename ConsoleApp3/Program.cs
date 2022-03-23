@@ -6,17 +6,42 @@ using System.Text;
 
 namespace ConsoleApp3
 {
-  class Program
+  /// <summary>
+  /// Основной класс приложения.
+  /// </summary>
+  public class Program
   {
+    #region Константы
+
+    /// <summary>
+    /// Строка с название сборки. 
+    /// </summary>
     private const string AssemblyString = "System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089";
     
+    /// <summary>
+    /// Имя типа.
+    /// </summary>
     private const string TypeName = "System.Windows.Forms.MessageBox";
 
+    /// <summary>
+    /// Название метода.
+    /// </summary>
     private const string MethodName = "Show";
 
+    /// <summary>
+    /// Название файла.
+    /// </summary>
     private const string FileName = "fields.txt";
 
-    static void Main(string[] args)
+    #endregion
+
+    #region Методы
+
+    /// <summary>
+    /// Стандартная точка входа в приложние.
+    /// </summary>
+    /// <param name="args">Аргументы командной строки.</param>
+    public static void Main(string[] args)
     {
       var messageBox = new AssemblyWrapper(AssemblyString, TypeName, true);
       messageBox.RunStatic(MethodName, new[] { "Hellow World!" }, out object result);
@@ -24,7 +49,11 @@ namespace ConsoleApp3
       WriteToFile(messageBox.Type);
     }
 
-    static void WriteToFile(Type type)
+    /// <summary>
+    /// Запись имен публичных методов указанного типа в файл.
+    /// </summary>
+    /// <param name="type">Тип.</param>
+    private static void WriteToFile(Type type)
     {
       using (var file = new StreamWriter(FileName, false))
       {
@@ -39,5 +68,7 @@ namespace ConsoleApp3
         file.Flush();
       }
     }
+
+    #endregion
   }
 }
