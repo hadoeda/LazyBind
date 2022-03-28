@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31129.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TypeWrapper", "ConsoleApp3\TypeWrapper.csproj", "{1F1998B9-57FF-4F47-A47A-36387CF86E85}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LazyBind", "ConsoleApp3\LazyBind.csproj", "{1F1998B9-57FF-4F47-A47A-36387CF86E85}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

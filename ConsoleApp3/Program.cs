@@ -1,9 +1,7 @@
-﻿using System;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Text;
 
-namespace TypeWrapper
+namespace LazyBind
 {
   /// <summary>
   /// Основной класс приложения.

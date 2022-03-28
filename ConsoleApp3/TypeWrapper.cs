@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Reflection;
 
-namespace TypeWrapper
+namespace LazyBind
 {
 
   /// <summary>
