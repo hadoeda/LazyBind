@@ -41,7 +41,7 @@ namespace LazyBind
     public static void Main(string[] args)
     {
       var messageBox = new TypeWrapper(AssemblyString, TypeName);
-      messageBox.RunStatic(MethodName, new[] { "Hello World!" }, out object result);
+      messageBox.RunStatic(MethodName, new[] { "Hello World!" });
 
       WriteToFile(messageBox);
     }
@@ -49,7 +49,7 @@ namespace LazyBind
     /// <summary>
     /// Запись имен публичных методов указанного типа в файл.
     /// </summary>
-    /// <param name="type">Обертка типа</param>
+    /// <param name="typeWrapper">Обертка типа.</param>
     private static void WriteToFile(TypeWrapper typeWrapper)
     {
       using (var file = new StreamWriter(FileName, false))

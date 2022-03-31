@@ -4,17 +4,15 @@ using System.Reflection;
 
 namespace LazyBind
 {
-
   /// <summary>
-  /// Класс обертка для типа
-  /// Упращает вызов методов типа из сборки.
+  /// Обёртка типа для вызова его методов.
   /// </summary>
   internal sealed class TypeWrapper
   {
     #region Поля и свойства
 
     /// <summary>
-    /// Объект типа класса.
+    /// Тип.
     /// </summary>
     private readonly Type type;
 
@@ -28,7 +26,9 @@ namespace LazyBind
     /// <param name="methodName">Имя метода.</param>
     /// <param name="args">Аргументы.</param>
     /// <param name="result">Возрващаемое значение.</param>
-    public void RunStatic(string methodName, object[] args, out object result)
+    /// <exception cref="ArgumentNullException">Имя метода пустое.</exception>
+    /// <exception cref="MissingMethodException">Метод не найден.</exception>
+    public object RunStatic(string methodName, object[] args)
     {
       if (string.IsNullOrEmpty(methodName))
         throw new ArgumentNullException(nameof(methodName));
@@ -36,32 +36,9 @@ namespace LazyBind
       var method = this.type.GetMethods(BindingFlags.Public | BindingFlags.Static)
         .FirstOrDefault(m => m.Name == methodName && m.GetParameters().Length == args.Length);
       if (method == null)
-        throw new Exception($"I don't find {method} method");
+        throw new MissingMethodException($"Мethod {methodName} is not found");
 
-      result = method.Invoke(null, args);
-    }
-
-    /// <summary>
-    /// Запускает не статически метод класса.
-    /// </summary>
-    /// <param name="methodName">Имя метода.</param>
-    /// <param name="args">Аргументы.</param>
-    /// <param name="result">Возрващаемое значение.</param>
-    public void Run(string methodName, object[] args, out object result)
-    {
-      if (string.IsNullOrEmpty(methodName))
-        throw new ArgumentNullException(nameof(methodName));
-
-      var method = this.type.GetMethods(BindingFlags.Public | BindingFlags.Instance)
-        .FirstOrDefault(m => m.Name == methodName && m.GetParameters().Length == args.Length);
-      if (method == null)
-        throw new Exception($"I don't find {method} method");
-
-      var instance = Activator.CreateInstance(this.type);
-      if (instance == null)
-        throw new Exception($"Instance of type {type.Name} has not created.");
-
-      result = method.Invoke(instance, args);
+      return method.Invoke(null, args);
     }
 
     /// <summary>
@@ -83,15 +60,13 @@ namespace LazyBind
     /// </summary>
     /// <param name="assemblyString">Строка с название сборки.</param>
     /// <param name="typeName">Название типа.</param>
+    /// <exception cref="TypeLoadException">Не удалось загрузить тип.</exception>
     public TypeWrapper(string assemblyString, string typeName)
     {
       var asm = Assembly.Load(assemblyString);
-      if (asm == null)
-        throw new Exception("I don't load assembly");
-
       this.type = asm.GetType(typeName);
       if (this.type == null)
-        throw new Exception($"I don't load {assemblyString} type from {typeName} assembly");
+        throw new TypeLoadException($"Type {typeName} is not loaded from  assembly {assemblyString}");
     }
 
     #endregion
