@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 
 namespace LazyBind
@@ -40,10 +41,17 @@ namespace LazyBind
     /// <param name="args">Аргументы командной строки.</param>
     public static void Main(string[] args)
     {
-      var messageBox = new TypeWrapper(AssemblyString, TypeName);
-      messageBox.RunStatic(MethodName, new[] { "Hello World!" });
+      try
+      {
+        var messageBox = new TypeWrapper(AssemblyString, TypeName);
+        messageBox.RunStatic(MethodName, new[] { "Hello World!" });
 
-      WriteToFile(messageBox);
+        WriteToFile(messageBox);
+      }
+      catch (Exception ex)
+      {
+        Console.WriteLine(ex.Message);
+      }
     }
 
     /// <summary>

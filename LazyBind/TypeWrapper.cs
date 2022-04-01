@@ -12,7 +12,7 @@ namespace LazyBind
     #region Поля и свойства
 
     /// <summary>
-    /// Тип.
+    /// Оборачиваемый тип.
     /// </summary>
     private readonly Type type;
 
@@ -25,7 +25,7 @@ namespace LazyBind
     /// </summary>
     /// <param name="methodName">Имя метода.</param>
     /// <param name="args">Аргументы.</param>
-    /// <param name="result">Возрващаемое значение.</param>
+    /// <returns>Возвращаемое методом значение.</returns>
     /// <exception cref="ArgumentNullException">Имя метода пустое.</exception>
     /// <exception cref="MissingMethodException">Метод не найден.</exception>
     public object RunStatic(string methodName, object[] args)
@@ -47,7 +47,7 @@ namespace LazyBind
     /// <returns>Метаданные методов.</returns>
     public MethodInfo[] GetPublicMethods()
     {
-      return type.GetMethods(BindingFlags.Public | BindingFlags.Instance);
+      return this.type.GetMethods(BindingFlags.Public | BindingFlags.Instance);
     }
 
     #endregion
